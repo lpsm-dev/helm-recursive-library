@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  ✨ This is a simple helm library that i use in GitLab ✨
+  ✨ This is a simple helm library that i use in GitLab to create recursive resources in Kubernetes ✨
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@ Hey!! If you like this project or if you find some bugs feel free to contact me 
 
 >
 > * Email: lpsm-dev@protonmail.com
-> * Website: https://github.com/lpmatos
+> * Website: <https://github.com/lpmatos>
 > * GitHub: [@lpmatos](https://github.com/lpmatos)
 > * GitLab: [@lpmatos](https://gitlab.com/lpmatos)
 >

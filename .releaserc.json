@@ -1,7 +1,5 @@
 {
-  "branches": [
-    "main"
-  ],
+  "branches": ["main"],
   "tagFormat": "${version}",
   "plugins": [
     [
@@ -122,19 +120,31 @@
         }
       }
     ],
-    ["@semantic-release/exec", {
-      "verifyReleaseCmd": "echo ${nextRelease.version} > VERSION"
-    }],
-    ["@semantic-release/github", {
-      "addReleases": "top"
-    }],
-    ["@semantic-release/changelog", {
-      "changelogFile": "CHANGELOG.md",
-      "changelogTitle": "# Semantic Versioning Changelog"
-    }],
-    ["@semantic-release/git", {
-      "assets": ["CHANGELOG.md", "README.md"],
-      "message": "chore(release): version <%= nextRelease.version %> - <%= new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %>"
-    }]
+    [
+      "@semantic-release/exec",
+      {
+        "verifyReleaseCmd": "echo ${nextRelease.version} > VERSION"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "addReleases": "top"
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# Semantic Versioning Changelog"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md", "README.md"],
+        "message": "chore(release): version <%= nextRelease.version %> - <%= new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %>"
+      }
+    ]
   ]
 }
