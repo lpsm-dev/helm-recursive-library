@@ -1,0 +1,27 @@
+{{/*
+This template serves as the blueprint for the Configmap objects
+that are created within the common library.
+*/}}
+{{- define "common.loop.env-configmap" -}}
+{{ $releaseNamespace := .Release.Namespace }}
+{{ $labels := include "common.labels" . }}
+{{- if .Values.applications }}
+{{- range .Values.applications }}
+---
+{{ $project := .gitlab.project | replace "/" "-" }}
+{{- if .extraEnv }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-configmap-{{ $project }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- $labels | nindent 4 }}
+data:
+{{- range $KEY, $VALUE := .extraEnv }}
+  {{ $KEY }}: {{ $VALUE | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,79 @@
+# Default values for deploy-ms.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+environment: develop
+domain: xpto.com.br
+
+gitlab:
+  group: xpto/beta
+  branch: sandbox
+
+application:
+  owner: "team-xpto"
+  product: "xpto"
+
+image:
+  registry: registry.xpto.com
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+  name: "xpto-registry"
+  imagePullSecrets:
+    - name: "image-pull-secret"
+
+# ================================================
+# GLOBAL
+# ================================================
+
+global:
+  sharedEnv: {}
+  sharedEnvSecret: {}
+
+# ================================================
+# APPLICATIONS
+# ================================================
+
+applications:
+  - name: auth
+    gitlab:
+      tag: "1.0.0-rc.1"
+      project: api/auth
+    replicaCount: 1
+    strategy:
+    rollingUpdate:
+      unavailable:
+      surge:
+    service:
+      externalPort: 80
+      internalPort: 3000
+    resources:
+      limits:
+        cpu: 100m
+        memory: 252Mi
+      requests:
+        cpu: 100m
+        memory: 252Mi
+    extraEnv: {}
+    extraEnvSecret: {}
+    livenessProbe:
+      enabled: true
+    readinessProbe:
+      enabled: true
+    deploymentAnnotations: {}
+    podAnnotations: {}
+    podSecurityContext: {}
+    containerSecurityContext: {}
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    priorityClassName: ""
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+    pdb:
+      enabled: true

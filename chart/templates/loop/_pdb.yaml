@@ -1,0 +1,30 @@
+{{/*
+This template serves as the blueprint for the Pod Disruption Budget objects
+that are created within the common library.
+*/}}
+{{- define "common.loop.pdb" -}}
+{{ $releaseName := .Release.Name }}
+{{ $releaseNamespace := .Release.Namespace }}
+{{ $group := .Values.gitlab.group | replace "/" "-" }}
+{{ $labels := include "common.labels" . }}
+{{- if .Values.applications }}
+{{- range .Values.applications }}
+---
+{{ $project := .gitlab.project | replace "/" "-" }}
+{{ $name := printf "%s-%s" $group $project }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-{{ $project }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  minAvailable: 50%
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $name }}
+      app.kubernetes.io/instance: {{ $releaseName }}
+{{- end }}
+{{- end }}
+{{- end -}}

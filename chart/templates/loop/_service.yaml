@@ -1,0 +1,36 @@
+{{/*
+This template serves as the blueprint for the Service objects
+that are created within the common library.
+*/}}
+{{- define "common.loop.service" -}}
+{{ $releaseName := .Release.Name }}
+{{ $releaseNamespace := .Release.Namespace }}
+{{ $group := .Values.gitlab.group | replace "/" "-" }}
+{{ $labels := include "common.labels" . }}
+{{- if .Values.applications }}
+{{- range .Values.applications }}
+---
+{{ $project := .gitlab.project | replace "/" "-" }}
+{{ $name := printf "%s-%s" $group $project }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- $labels | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+spec:
+  type: {{ .service.type | default "ClusterIP" }}
+  ports:
+  - port: {{ .service.externalPort | default 80 }}
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+{{- end }}
+{{- end }}
+{{- end -}}

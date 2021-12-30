@@ -1,0 +1,49 @@
+{{/*
+This template serves as the blueprint for the Horizontal Pod Autoscaler objects
+that are created within the common library.
+*/}}
+{{- define "common.loop.hpa" -}}
+{{ $releaseNamespace := .Release.Namespace }}
+{{ $group := .Values.gitlab.group | replace "/" "-" }}
+{{ $labels := include "common.labels" . }}
+{{- if .Values.applications }}
+{{- range .Values.applications }}
+---
+{{ $project := .gitlab.project | replace "/" "-" }}
+{{ $name := printf "%s-%s" $group $project }}
+{{- if .autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $name }}
+  namespace: {{ $releaseNamespace }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $name }}
+  minReplicas: {{ .autoscaling.minReplicas | default 1 }}
+  maxReplicas: {{ .autoscaling.maxReplicas | default 3 }}
+  metrics:
+  {{- if .autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
+  {{- if .autoscaling.targetMemoryUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ .autoscaling.targetMemoryUtilizationPercentage }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}

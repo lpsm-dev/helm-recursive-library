@@ -1,0 +1,19 @@
+{{/*
+This template serves as the blueprint for the Configmap objects that are created
+within the common library used by envFrom on Deployment.
+*/}}
+{{- define "common.shared.env" -}}
+{{- if .Values.global.sharedEnv -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-configmap-shared
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+data:
+{{- range $KEY, $VALUE := .Values.global.sharedEnv }}
+  {{ $KEY }}: {{ $VALUE | quote }}
+{{- end }}
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,5 @@
+checks:
+  addAllBuiltIn: true
+  exclude:
+    - "no-extensions-v1beta"
+    - "required-annotation-email"

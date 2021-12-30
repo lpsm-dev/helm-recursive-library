@@ -1,0 +1,161 @@
+{{/*
+This template serves as the blueprint for the Deployment objects
+that are created within the common library.
+*/}}
+{{- define "common.loop.deployment" -}}
+{{ $releaseName := .Release.Name }}
+{{ $releaseNamespace := .Release.Namespace }}
+{{ $registry := .Values.image.registry }}
+{{ $pullPolicy := .Values.image.pullPolicy | default "Always" }}
+{{ $branch := .Values.gitlab.branch | default "latest" }}
+{{ $group := .Values.gitlab.group | replace "/" "-" }}
+{{ $groupWithPath := .Values.gitlab.group }}
+{{ $labels := include "common.labels" . }}
+{{ $sharedEnv := .Values.global.sharedEnv }}
+{{ $sharedEnvSecret := .Values.global.sharedEnvSecret }}
+{{ $serviceAccount := include "helm.serviceAccountName" . }}
+{{- if .Values.applications }}
+---
+{{- range .Values.applications }}
+---
+{{ $tag := .gitlab.tag | default $branch }}
+{{ $project := .gitlab.project | replace "/" "-" }}
+{{ $name := printf "%s-%s" $group $project }}
+{{ $image := printf "%s/%s/%s:%s" $registry $groupWithPath .gitlab.project $tag }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  namespace: {{ $releaseNamespace }}
+  annotations:
+    {{- with .deploymentAnnotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    reloader.stakater.com/auto: "true"
+  labels:
+    {{- $labels | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+spec:
+  {{- if not .autoscaling.enabled }}
+  replicas: {{ .replicaCount }}
+  {{- end }}
+  {{- $strategy := .strategy | default "Recreate" -}}
+  {{- if and (ne $strategy "Recreate") (ne $strategy "RollingUpdate") }}
+    {{- fail (printf "Not a valid strategy type for Deployment (%s)" $strategy) }}
+  {{- end }}
+  strategy:
+    type: {{ $strategy }}
+    {{- with .rollingUpdate }}
+    {{- if and (eq $strategy "RollingUpdate") (or .surge .unavailable) }}
+    rollingUpdate:
+      {{- with .unavailable }}
+      maxUnavailable: {{ . }}
+      {{- end }}
+      {{- with .surge }}
+      maxSurge: {{ . }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $name }}
+      app.kubernetes.io/instance: {{ $releaseName }}
+  template:
+    metadata:
+      annotations:
+        {{- with .podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+        app.kubernetes.io/instance: {{ $releaseName }}
+    spec:
+      {{- with .imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ $serviceAccount }}
+      containers:
+      - name: {{ $name }}
+        image: "{{ $image }}"
+        imagePullPolicy: {{ $pullPolicy | default "Always" }}
+        {{- with .containerSecurityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        resources: {{- toYaml .resources | nindent 10 }}
+        envFrom:
+        {{- if $sharedEnv }}
+        - configMapRef:
+            name: env-configmap-shared
+        {{- end }}
+        {{- if $sharedEnvSecret }}
+        - secretRef:
+            name: env-secret-shared
+        {{- end }}
+        {{- if .extraEnv }}
+        - configMapRef:
+            name: env-configmap-{{ $project }}
+        {{- end }}
+        {{- if .extraEnvSecret }}
+        - secretRef:
+            name: env-secret-{{ $project }}
+        {{- end }}
+        {{- if .readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: readinessProbe
+            - name: Content-Type
+              value: application/json
+            path: {{ .readinessProbe.path | default "/v1/health" }}
+            port: {{ .readinessProbe.port | default "http" }}
+          initialDelaySeconds: {{ .readinessProbe.initialDelaySeconds | default "5" }}
+          periodSeconds: {{ .readinessProbe.periodSeconds | default "3" }}
+          failureThreshold: 3
+          timeoutSeconds: 10
+        {{- end }}
+        {{- if .livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: livenessProbe
+            - name: Content-Type
+              value: application/json
+            path: {{ .livenessProbe.path | default "/v1/health" }}
+            port: {{ .livenessProbe.port | default "http" }}
+          initialDelaySeconds: {{ .livenessProbe.initialDelaySeconds | default "5" }}
+          periodSeconds: {{ .livenessProbe.periodSeconds | default "3" }}
+          failureThreshold: 5
+          timeoutSeconds: 15
+        {{- end }}
+        ports:
+        - name: http
+          containerPort: {{ .service.internalPort }}
+          protocol: TCP
+      {{- with .priorityClassName }}
+      priorityClassName: {{ toYaml . | quote }}
+      {{- end }}
+      {{- with .nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}
+---
