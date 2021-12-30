@@ -1,0 +1,6 @@
+{{ include "common.serviceaccount" . }}
+---
+{{ include "common.shared.env-secret" . }}
+---
+{{ include "common.shared.env" . }}
+---

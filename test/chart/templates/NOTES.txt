@@ -1,0 +1,2 @@
+
+This helm chart are installed!

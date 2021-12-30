@@ -4,7 +4,7 @@
   <img alt="gif-header" src="https://cdn.hackernoon.com/hn-images/0*KyeIBTwEiX6_sE06" width="350px" float="center"/>
 </p>
 
-<h2 align="center">✨ My personal Helm Library ✨</h2>
+<h2 align="center">✨ Gitlab Helm Chart Library ✨</h2>
 
 <div align="center">
 
@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  ✨ This is a simples helm library example ✨
+  ✨ This is a simple helm library that i use in GitLab ✨
 </p>
 
 <p align="center">
