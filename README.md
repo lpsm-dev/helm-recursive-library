@@ -58,7 +58,32 @@ Tools used in this setup:
 - datree
 - kubeaudit
 
-## ➤ Testing <a name = "testing"></a>
+## ➤ Motivation <a name = "motivation"></a>
+
+Hi stranger! Today I want to share with you my experience using Helm library chart daily on my work, but let's go back to the concepts. Helm is a package maneger that you can use to organize all kubernetes objects created in a cluster, all versioned and based on a standard structure.
+
+Over the time you realize that once you create the helm chart it will hardly have to change its structure. However, depending on your project and the amount of services that you have, this can become a challenge for you.
+
+With that in mind we have the helm libraries, which help you share default settings for your catalogs. And that's what this project proposes: make a helm library for creating objects using recursion, speeding up the setup of your services in Kubernetes.
+
+## ➤ Usage <a name = "usage"></a>
+
+Reference in `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: common
+  version: 0.0.1
+  repository: file://../../chart
+```
+
+Update local chart:
+
+```bash
+helm dependency update
+```
+
+## ➤ Audit <a name = "audit"></a>
 
 Run these commands in the context of `test/chart` folder:
 
@@ -72,6 +97,16 @@ checkov -f manifest.yml --framework kubernetes
 datree test manifest.yml
 kubeaudit all -f manifest.yml
 ```
+
+## ➤ Concepts <a name = "concepts"></a>
+
+This section aims to describe at a high level what the tools we use are and how we use them, without reproducing documentation that is better written (and more up to date) in the repositories and websites of these tools themselves. It's recommended to familiarize yourself with these tools as early as possible.
+
+### Helm
+
+Helm is a templating system for Kubernetes resource manifests. A Helm chart is a bundle of resource templates that can take parameters ("values"). A Helm chart therefore describes a paramaterized deployment configuration that is environment-agnostic. Helm charts are distributed from Helm repositories, and Helm can act as a package manager to manage repositories and charts.
+
+An instantiated deployment of a Helm chart is called a Helm release. We'll refer to these as "releases" for short. We can say that a release is a deployment of a Helm chart in an environment, where an environment is the combination of a set of parameters ("values") and a Kubernetes target.
 
 ## ➤ Author <a name = "author"></a>
 
