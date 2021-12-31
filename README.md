@@ -123,10 +123,6 @@ Hey!! If you like this project or if you find some bugs feel free to contact me 
 
 To check the change history, please access the [**CHANGELOG.md**](CHANGELOG.md) file.
 
-## ➤ Troubleshooting <a name = "troubleshooting"></a>
-
-If you have any problems, please contact [me](https://github.com/lpmatos).
-
 ## ➤ Project status <a name = "project-status"></a>
 
 Currently the project is constantly being updated 👾.
