@@ -4,7 +4,7 @@
   <img alt="gif-header" src="https://cdn.hackernoon.com/hn-images/0*KyeIBTwEiX6_sE06" width="350px" float="center"/>
 </p>
 
-<h2 align="center">✨ Gitlab Helm Chart Library ✨</h2>
+<h2 align="center">✨ Helm Chart Library ✨</h2>
 
 <div align="center">
 
@@ -46,6 +46,8 @@ This will give you access to the code on your **local machine**.
 
 ## ➤ Tools <a name = "tools"></a>
 
+Tools used in this setup:
+
 - kubectl
 - helm
 - krew
@@ -58,8 +60,9 @@ This will give you access to the code on your **local machine**.
 
 ## ➤ Testing <a name = "testing"></a>
 
+Run these commands in the context of `test/chart` folder:
+
 ```bash
-cd test/chart
 helm dependency update --debug
 helm template . -n valida -f values.yaml > manifest.yml
 kubeval manifest.yml --strict --force-color --exit-on-error
