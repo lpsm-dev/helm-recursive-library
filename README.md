@@ -116,9 +116,7 @@ Hey!! If you like this project or if you find some bugs feel free to contact me 
 
 >
 > * Email: lpsm-dev@protonmail.com
-> * Website: <https://github.com/lpmatos>
-> * GitHub: [@lpmatos](https://github.com/lpmatos)
-> * GitLab: [@lpmatos](https://gitlab.com/lpmatos)
+> * Website: https://linktr.ee/lpmatos
 >
 
 ## ➤ Versioning <a name = "versioning"></a>
