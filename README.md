@@ -108,6 +108,13 @@ Helm is a templating system for Kubernetes resource manifests. A Helm chart is a
 
 An instantiated deployment of a Helm chart is called a Helm release. We'll refer to these as "releases" for short. We can say that a release is a deployment of a Helm chart in an environment, where an environment is the combination of a set of parameters ("values") and a Kubernetes target.
 
+## ➤ Inspirations <a name = "inspirations"></a>
+
+- https://github.com/InsomniaCoder/helm-library
+- https://github.com/k8s-at-home/library-charts
+- https://github.com/prefapp/prefapp-helm
+- https://github.com/wuguteng/propeller
+
 ## ➤ Author <a name = "author"></a>
 
 👤 **Lucca Pessoa**
