@@ -46,7 +46,7 @@ This will give you access to the code on your **local machine**.
 
 ## ➤ Tools <a name = "tools"></a>
 
-Tools used in this setup:
+List of tools thar i used in this project:
 
 - kubectl
 - helm
