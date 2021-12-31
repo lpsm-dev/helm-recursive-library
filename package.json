@@ -20,15 +20,15 @@
   "devDependencies": {
     "@commitlint/cli": "16.0.1",
     "@commitlint/config-conventional": "16.0.0",
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/commit-analyzer": "8.0.1",
-    "@semantic-release/exec": "5.0.0",
-    "@semantic-release/git": "9.0.1",
-    "@semantic-release/gitlab": "6.2.2",
-    "@semantic-release/release-notes-generator": "9.0.3",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/commit-analyzer": "9.0.2",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/gitlab": "7.0.4",
+    "@semantic-release/release-notes-generator": "10.0.3",
     "commitizen": "4.2.4",
     "mega-linter-runner": "5.4.0",
-    "semantic-release": "17.4.7"
+    "semantic-release": "18.0.1"
   },
   "resolutions": {
     "ansi-regex": "^6.0.0"
