@@ -8,9 +8,6 @@ title = "gitleaks config"
 # Other secrets might just be a hash which means we need to write more complex rules to verify
 # that what we are matching is a secret.
 #
-# Here is an example of a semi-generic secret
-#
-#   discord_client_secret = "8dyfuiRyq=vVc3RRr_edRk-fK__JItpZ"
 #
 # We can write a regular expression to capture the variable name (identifier),
 # the assignment symbol (like '=' or ':='), and finally the actual secret.
