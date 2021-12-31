@@ -44,6 +44,32 @@ If you want contribute on this project, first you need to make a **git clone**:
 
 This will give you access to the code on your **local machine**.
 
+## ➤ Tools <a name = "tools"></a>
+
+- kubectl
+- helm
+- krew
+- kubeval
+- kube-linter
+- kube-score
+- checkov
+- datree
+- kubeaudit
+
+## ➤ Testing <a name = "testing"></a>
+
+```bash
+cd test/chart
+helm dependency update --debug
+helm template . -n valida -f values.yaml > manifest.yml
+kubeval manifest.yml --strict --force-color --exit-on-error
+kube-linter lint manifest.yml --config .kube-linter.yml
+kubectl score manifest.yml
+checkov -f manifest.yml --framework kubernetes
+datree test manifest.yml
+kubeaudit all -f manifest.yml
+```
+
 ## ➤ Author <a name = "author"></a>
 
 👤 **Lucca Pessoa**

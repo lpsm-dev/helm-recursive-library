@@ -3,8 +3,8 @@ appVersion: 1.16.0
 dependencies:
   - name: common
     repository: file://../../chart
-    version: chart
+    version: 0.0.1
 description: A Helm chart for Kubernetes
 name: chart
 type: application
-version: 1.0.0-rc.1
+version: 0.0.1
