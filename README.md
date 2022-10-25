@@ -1,30 +1,20 @@
 <div align="center">
 
-<p>
-  <img alt="gif-header" src="https://cdn.hackernoon.com/hn-images/0*KyeIBTwEiX6_sE06" width="350px" float="center"/>
-</p>
+<img alt="gif-header" src="https://cdn.hackernoon.com/hn-images/0*KyeIBTwEiX6_sE06" width="300"/>
 
-<h2 align="center">✨ Helm Chart Library ✨</h2>
-
-<div align="center">
+<h2>✨ Helm Chart Library ✨</h2>
 
 [![Semantic Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/lpmatos/helm-library)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://github.com/lpmatos/helm-library)
 [![GitHub repo size](https://img.shields.io/github/repo-size/lpmatos/helm-library)](https://github.com/lpmatos/helm-library)
 
-</div>
-
 ---
 
-<p align="center">
-  <img alt="gif-about" src="https://i.stack.imgur.com/niIU6.gif" width="450px" float="center"/>
-</p>
+<img alt="gif-about" src="https://i.stack.imgur.com/niIU6.gif" width="225"/>
 
-<p align="center">
-  ✨ This is a simple helm library that i use in GitLab to create recursive resources in Kubernetes ✨
-</p>
+<p>✨ This is a simple helm library that i use in GitLab to create recursive resources in Kubernetes ✨</p>
 
-<p align="center">
+<p>
   <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#motivation">Motivation</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#versioning">Versioning</a>
@@ -115,17 +105,6 @@ An instantiated deployment of a Helm chart is called a Helm release. We'll refer
 - https://github.com/prefapp/prefapp-helm
 - https://github.com/wuguteng/propeller
 
-## ➤ Author <a name = "author"></a>
-
-👤 **Lucca Pessoa**
-
-Hey!! If you like this project or if you find some bugs feel free to contact me in my channels:
-
->
-> * Email: lpsm-dev@protonmail.com
-> * Website: https://linktr.ee/lpmatos
->
-
 ## ➤ Versioning <a name = "versioning"></a>
 
 To check the change history, please access the [**CHANGELOG.md**](CHANGELOG.md) file.
@@ -140,9 +119,7 @@ Currently the project is constantly being updated 👾.
 
 Give me a ⭐️ if this project helped you!
 
-<p>
-  <img alt="gif-header" src="https://www.icegif.com/wp-content/uploads/baby-yoda-bye-bye-icegif.gif" width="350px" float="center"/>
-</p>
+<img alt="gif-header" src="https://www.icegif.com/wp-content/uploads/baby-yoda-bye-bye-icegif.gif" width="225"/>
 
 Made with 💜 by [me](https://github.com/lpmatos) :wave: inspired on [readme-md-generator](https://github.com/kefranabg/readme-md-generator)
 
